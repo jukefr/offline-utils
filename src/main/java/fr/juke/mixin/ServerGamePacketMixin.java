@@ -12,7 +12,6 @@ import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
-import net.minecraft.network.protocol.game.ServerboundSpectatorActionPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -76,11 +75,6 @@ public abstract class ServerGamePacketMixin {
 
     @Inject(method = "handlePlayerCommand", at = @At("HEAD"), cancellable = true)
     private void offlineUtils$blockPlayerCommand(ServerboundPlayerCommandPacket packet, CallbackInfo ci) {
-        block(ci);
-    }
-
-    @Inject(method = "handleSpectatorAction", at = @At("HEAD"), cancellable = true)
-    private void offlineUtils$blockSpectator(ServerboundSpectatorActionPacket packet, CallbackInfo ci) {
         block(ci);
     }
 
