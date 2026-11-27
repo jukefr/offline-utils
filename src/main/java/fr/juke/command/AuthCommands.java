@@ -37,14 +37,14 @@ public final class AuthCommands {
 
         dispatcher.register(Commands.literal("offlineutils")
                 .then(Commands.literal("reload")
-                        .requires(src -> src.permissions().hasPermission(net.minecraft.server.permissions.Permissions.COMMANDS_GAMEMASTER))
+                        .requires(src -> src.hasPermission(2))
                         .executes(ctx -> {
                             OfflineUtilsConfig.INSTANCE.load();
                             ctx.getSource().sendSystemMessage(msg("offline-utils config reloaded.", ChatFormatting.GREEN));
                             return 1;
                         }))
                 .then(Commands.literal("status")
-                        .requires(src -> src.permissions().hasPermission(net.minecraft.server.permissions.Permissions.COMMANDS_GAMEMASTER))
+                        .requires(src -> src.hasPermission(2))
                         .executes(ctx -> {
                             OfflineUtilsConfig cfg = OfflineUtilsConfig.INSTANCE;
                             ctx.getSource().sendSystemMessage(msg("offline-utils 1.0.0", ChatFormatting.AQUA));
@@ -54,7 +54,7 @@ public final class AuthCommands {
                             return 1;
                         }))
                 .then(Commands.literal("reset")
-                        .requires(src -> src.permissions().hasPermission(net.minecraft.server.permissions.Permissions.COMMANDS_ADMIN))
+                        .requires(src -> src.hasPermission(3))
                         .then(Commands.argument("player", StringArgumentType.word())
                                 .executes(ctx -> {
                                     String name = StringArgumentType.getString(ctx, "player");

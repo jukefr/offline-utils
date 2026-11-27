@@ -40,7 +40,7 @@ public final class AuthManager {
             return;
         }
 
-        String name = player.getGameProfile().name();
+        String name = player.getGameProfile().getName();
         if (isSessionValid(name, player.getIpAddress())) {
             player.sendSystemMessage(msg("Welcome back, " + name + ".", ChatFormatting.GREEN));
             return;
