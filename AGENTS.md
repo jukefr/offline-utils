@@ -260,6 +260,7 @@ release. Modrinth needs separate versions per loader because the loader field di
 
 ## Modrinth
 
+- Project id: `OJwHbSmX`
 - Project slug: `offline-utils`
 - Environment: `server_only`
 - Project body mirrors `README.md`
