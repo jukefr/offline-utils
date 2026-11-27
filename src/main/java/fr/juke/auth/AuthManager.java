@@ -48,7 +48,7 @@ public final class AuthManager {
 
         long timeout = OfflineUtilsConfig.INSTANCE.auth.loginTimeoutSeconds;
         PENDING.put(player.getUUID(), new PendingLogin(name, Instant.now().getEpochSecond() + timeout));
-        player.setPermanentlyInvulnerable(true);
+        player.setInvulnerable(true);
 
         player.sendSystemMessage(msg("This server uses /login authentication.", ChatFormatting.GOLD));
         if (STORE.has(name)) {
@@ -139,7 +139,7 @@ public final class AuthManager {
 
     private static void complete(ServerPlayer player, PendingLogin pending) {
         PENDING.remove(player.getUUID());
-        player.setPermanentlyInvulnerable(false);
+        player.setInvulnerable(false);
 
         int minutes = OfflineUtilsConfig.INSTANCE.auth.sessionMinutes;
         if (minutes > 0) {

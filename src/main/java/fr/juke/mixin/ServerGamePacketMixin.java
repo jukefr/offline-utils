@@ -3,7 +3,6 @@ package fr.juke.mixin;
 import fr.juke.auth.AuthManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.protocol.game.ServerboundChatCommandPacket;
-import net.minecraft.network.protocol.game.ServerboundChatCommandSignedPacket;
 import net.minecraft.network.protocol.game.ServerboundChatPacket;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
@@ -12,7 +11,6 @@ import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
-import net.minecraft.network.protocol.game.ServerboundSpectatorActionPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -79,11 +77,6 @@ public abstract class ServerGamePacketMixin {
         block(ci);
     }
 
-    @Inject(method = "handleSpectatorAction", at = @At("HEAD"), cancellable = true)
-    private void offlineUtils$blockSpectator(ServerboundSpectatorActionPacket packet, CallbackInfo ci) {
-        block(ci);
-    }
-
     @Inject(method = "handleChat", at = @At("HEAD"), cancellable = true)
     private void offlineUtils$blockChat(ServerboundChatPacket packet, CallbackInfo ci) {
         if (AuthManager.isPending(this.player)) {
@@ -95,15 +88,6 @@ public abstract class ServerGamePacketMixin {
 
     @Inject(method = "handleChatCommand", at = @At("HEAD"), cancellable = true)
     private void offlineUtils$blockCommand(ServerboundChatCommandPacket packet, CallbackInfo ci) {
-        if (AuthManager.isPending(this.player) && !allowedWhilePending(packet.command())) {
-            this.player.sendSystemMessage(AuthManager.msg(
-                    "Use /login or /register before running commands.", ChatFormatting.RED));
-            ci.cancel();
-        }
-    }
-
-    @Inject(method = "handleSignedChatCommand", at = @At("HEAD"), cancellable = true)
-    private void offlineUtils$blockSignedCommand(ServerboundChatCommandSignedPacket packet, CallbackInfo ci) {
         if (AuthManager.isPending(this.player) && !allowedWhilePending(packet.command())) {
             this.player.sendSystemMessage(AuthManager.msg(
                     "Use /login or /register before running commands.", ChatFormatting.RED));
