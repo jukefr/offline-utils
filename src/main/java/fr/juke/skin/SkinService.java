@@ -55,11 +55,11 @@ public final class SkinService {
      * up the connection for long.
      */
     public static GameProfile apply(GameProfile profile) {
-        if (!isEnabled() || profile == null || profile.name() == null) {
+        if (!isEnabled() || profile == null || profile.getName() == null) {
             return profile;
         }
 
-        String name = profile.name();
+        String name = profile.getName();
         CachedSkin skin = lookup(name);
         if (skin == null) {
             return profile;
@@ -67,12 +67,9 @@ public final class SkinService {
 
         // Some Minecraft versions hand us an immutable profile, so build a
         // copy and leave the original untouched.
-        com.google.common.collect.Multimap<String, Property> copy =
-                com.google.common.collect.LinkedHashMultimap.create(profile.properties());
-        copy.removeAll("textures");
-        copy.put("textures", new Property("textures", skin.value, skin.signature));
-        return new GameProfile(profile.id(), profile.name(),
-                new com.mojang.authlib.properties.PropertyMap(copy));
+        profile.getProperties().removeAll("textures");
+        profile.getProperties().put("textures", new Property("textures", skin.value, skin.signature));
+        return profile;
     }
 
     private static CachedSkin lookup(String username) {

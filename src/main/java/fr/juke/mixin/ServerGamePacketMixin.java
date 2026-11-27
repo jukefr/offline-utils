@@ -3,7 +3,6 @@ package fr.juke.mixin;
 import fr.juke.auth.AuthManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.protocol.game.ServerboundChatCommandPacket;
-import net.minecraft.network.protocol.game.ServerboundChatCommandSignedPacket;
 import net.minecraft.network.protocol.game.ServerboundChatPacket;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
@@ -89,15 +88,6 @@ public abstract class ServerGamePacketMixin {
 
     @Inject(method = "handleChatCommand", at = @At("HEAD"), cancellable = true)
     private void offlineUtils$blockCommand(ServerboundChatCommandPacket packet, CallbackInfo ci) {
-        if (AuthManager.isPending(this.player) && !allowedWhilePending(packet.command())) {
-            this.player.sendSystemMessage(AuthManager.msg(
-                    "Use /login or /register before running commands.", ChatFormatting.RED));
-            ci.cancel();
-        }
-    }
-
-    @Inject(method = "handleSignedChatCommand", at = @At("HEAD"), cancellable = true)
-    private void offlineUtils$blockSignedCommand(ServerboundChatCommandSignedPacket packet, CallbackInfo ci) {
         if (AuthManager.isPending(this.player) && !allowedWhilePending(packet.command())) {
             this.player.sendSystemMessage(AuthManager.msg(
                     "Use /login or /register before running commands.", ChatFormatting.RED));
