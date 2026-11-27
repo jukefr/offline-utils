@@ -1,6 +1,6 @@
 package fr.juke.util;
 
-import net.fabricmc.loader.api.FabricLoader;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
 
@@ -13,6 +13,6 @@ public final class Paths {
     }
 
     public static Path configDir() {
-        return FabricLoader.getInstance().getConfigDirectory().toPath();
+        return FMLPaths.CONFIGDIR.get();
     }
 }
