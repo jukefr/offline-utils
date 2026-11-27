@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "offline-utils",
+  "version": "${version}",
+  "name": "Offline Utils",
+  "description": "Premium skin restoration and password authentication for offline-mode Minecraft servers.",
+  "authors": [
+    "jukefr"
+  ],
+  "contact": {
+    "homepage": "https://github.com/jukefr/offline-utils",
+    "sources": "https://github.com/jukefr/offline-utils",
+    "issues": "https://github.com/jukefr/offline-utils/issues"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/offline-utils/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "fr.juke.OfflineUtils"
+    ]
+  },
+  "mixins": [
+    "offline-utils.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.20.1",
+    "java": ">=25",
+    "minecraft": ">=26.2 <26.4",
+    "fabric-api": "*"
+  }
+}
